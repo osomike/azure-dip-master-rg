@@ -9,8 +9,10 @@ terraform {
       version = "~>2.90"
     }
   }
-  # This resources need to be in place to be able to use them.
-  # https://learn.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli
+  # This block allows us to save the terraform.tfstate file on the cloud, so a team of developers can use the terraform
+  # configuration to update the infrastructure.
+  # Link: https://learn.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli
+  # Note.- Before using this block, is important that the resource group, storage account and container ARE DEPLOYED.
   backend "azurerm" {
     resource_group_name  = "dip-prd-master-rg"
     storage_account_name = "dipprdmasterst"
@@ -83,25 +85,6 @@ resource "azurerm_storage_account" "storageaccount" {
 #   scope                = azurerm_resource_group.rg.id
 #   principal_id         = azuread_service_principal.sp01.id
 # }
-
-###########################################################
-################  Azure Storage Container #################
-###########################################################
-# resource "azurerm_storage_container" "storage_container" {
-#   name                  = "${var.default_prefix}-${var.environment}-content"
-#   storage_account_name  = azurerm_storage_account.storageaccount.name
-#   container_access_type = "private"
-# }
-
-# Upload file to storage container
-resource "azurerm_storage_blob" "example" {
-  name                   = "README.md"
-  storage_account_name   = azurerm_storage_account.storageaccount.name
-#  storage_container_name = azurerm_storage_container.storage_container.name
-  storage_container_name = azurerm_storage_data_lake_gen2_filesystem.myasdlgen2replica01.name
-  type                   = "Block"
-  source                 = "README.md"
-}
 
 
 ###########################################################
