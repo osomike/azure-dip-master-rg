@@ -22,19 +22,19 @@ A recomended name for this service princial can be: ```dip-service-princial-subs
 The output will look like this:
 ```console
 {
-  "appId": "112afa7c-79bc-45d7-b3a9-5edb8df0fb78",
+  "appId": "An App ID",
   "displayName": "dip-service-princial-subscription",
-  "password": "VXJ2pMp_k7avWrLzo_uOek.Q5Yy5J.C2Xm",
-  "tenant": "4e545e1b-d10d-4607-b5f2-69af9be47d24"
+  "password": "A password",
+  "tenant": "A tenant ID"
 }
 ```
 
 Store these credentials in the keyvault as:
 Service Principal App ID | Owner of the subscription
 dip-sp-subscription-appid
-Service Principal App ID | Owner of the subscription
+Service Principal Secret | Owner of the subscription
 dip-sp-subscription-secret
-Service Principal App ID | Owner of the subscription
+Tenant ID of the subscription
 dip-tenantid
 
 Store the output of the file as a secret anmed ```AZURE_CREDENTIALS``` in the repository.
