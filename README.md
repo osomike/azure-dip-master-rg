@@ -13,21 +13,35 @@ To create a service principal follow the following steps:
 ```console
 az ad sp create-for-rbac --name <my-service-principal-name> \
                          --role <role-name> \
-                         --scopes </subscriptions/my-subscription-ID/resourceGroups/myResourceGroupName>
+                         --scopes </subscriptions/my-subscription-ID/resourceGroups/myResourceGroupName> \
+                         --sdk-auth
 ```
 
-The scope of the service principal can be extended to the subscription.
+The scope of the service principal can be extended to the subscription, just use ```--scopes </subscriptions/my-subscription-ID``` instead.
+
 A recomended name for this service princial can be: ```dip-service-princial-subscription```
 
-The output will look like this:
+The output of the previous command should look like this:
 ```console
 {
-  "appId": "An App ID",
-  "displayName": "dip-service-princial-subscription",
-  "password": "A password",
-  "tenant": "A tenant ID"
+  "clientId": "<cliend-ID>",
+  "clientSecret": "<cliend-secret>",
+  "subscriptionId": "<subscription-ID>",
+  "tenantId": "<tenant-ID>",
+  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+  "resourceManagerEndpointUrl": "https://management.azure.com/",
+  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+  "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+  "galleryEndpointUrl": "https://gallery.azure.com/",
+  "managementEndpointUrl": "https://management.core.windows.net/"
 }
 ```
+
+Store this output as a secret named ```AZURE_CREDENTIALS``` in the repository.
+
+The file cicd.yml from github actions folder will read its content to perform the steps.
+
+The repository should also also contain the [Environments](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment) ```dev```, ```acp``` and ```prd```.
 
 Store these credentials in the keyvault as:
 Service Principal App ID | Owner of the subscription
@@ -36,6 +50,3 @@ Service Principal Secret | Owner of the subscription
 dip-sp-subscription-secret
 Tenant ID of the subscription
 dip-tenantid
-
-Store the output of the file as a secret anmed ```AZURE_CREDENTIALS``` in the repository.
-
