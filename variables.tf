@@ -18,7 +18,7 @@ variable "random_id" {
 
 variable "owner" {
   type        = string
-  default     = "Oscar Mike"
+  default     = "Digital Power"
   description = "Name of the owner"
 }
 
